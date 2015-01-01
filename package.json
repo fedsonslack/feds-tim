@@ -5,6 +5,7 @@
   "author": "Alex Wolkov <altryne@gmail.com>",
   "description": "Hello, this is Tim",
   "dependencies": {
+    "fuzzy": "^0.1.0",
     "hubot": "^2.11.0",
     "hubot-diagnostics": "0.0.1",
     "hubot-google-images": "^0.1.2",
@@ -18,7 +19,9 @@
     "hubot-scripts": "^2.5.16",
     "hubot-shipit": "^0.1.1",
     "hubot-slack": "^3.2.1",
-    "hubot-youtube": "^0.1.2"
+    "hubot-youtube": "^0.1.2",
+    "lodash": "^2.4.1",
+    "request": "^2.51.0"
   },
   "engines": {
     "node": "0.10.x"
