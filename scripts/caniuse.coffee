@@ -9,7 +9,7 @@
 #   NONE
 #
 # Commands:
-#   caniuse <feature name>
+#   hubot caniuse <feature name>
 #
 # Notes:
 #   This might not ever work
@@ -30,8 +30,8 @@ request {url: url}, (err, res, body) ->
   exports.caniuse_data = JSON.parse(body).data
 
 module.exports = (robot) ->
-  robot.respond /caniuse (.*)/i, (msg) ->
-    results = fuzzy.filter(msg.match[1], Object.keys(exports.caniuse_data))
+  robot.respond /(can.i.use |caniuse )(.*?)\?/i, (msg) ->
+    results = fuzzy.filter(msg.match[2], Object.keys(exports.caniuse_data))
     if results.length > 2
       msg.send "Found more then #{results.length - 1} results, lease narrow down your search to one of the following: \n `#{_.pluck(results, 'string').join(', ')}`"
     else if results.length > 0
