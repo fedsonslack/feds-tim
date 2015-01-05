@@ -29,7 +29,21 @@ helpContents = (name, commands) ->
       padding: 0;
     }
     .commands {
+      font-size: 15px;
+      width: 800px;
+      margin: 0 auto;
+      font-family: monospace;
+    }
+    .full_command {
+      padding: 10px;
+      border-top: 1px solid #BEBEBE;
+    }
+    .result{
+      opacity: 0.5;
       font-size: 13px;
+    }
+.result::before {
+      content: "> ";
     }
     p {
       border-bottom: 1px solid #eee;
@@ -65,7 +79,7 @@ module.exports = (robot) ->
     prefix = robot.alias or robot.name
     cmds = cmds.map (cmd) ->
       cmd = cmd.replace /^hubot/, prefix
-      cmd.replace /hubot/ig, "@#{robot.name}"
+      cmd.replace /hubot/ig, "#{robot.name}"
 
     emit = cmds.join "\n"
 
@@ -73,11 +87,21 @@ module.exports = (robot) ->
 
   robot.router.get "/#{robot.name}/help", (req, res) ->
     cmds = robot.helpCommands().map (cmd) ->
-      cmd.replace(/&/g,'&amp;').replace(/</g,'<span class="term">&lt;').replace(/>/g,'&gt;</span>')
+      cmd = htmlEncode(cmd)
+      cmd_arr = cmd.split (' - ')
+      cmd_arr[0] = "<div class=\"command\">#{cmd_arr[0]}</div>"
+      cmd_arr[1] = "<div class=\"result\">#{cmd_arr[1]}</div>"
+      return cmd_arr.join('\n')
 
-    emit = "<p>#{cmds.join '</p><p>'}</p>"
 
-    emit = emit.replace /hubot/ig, "<b>#{robot.name}</b>"
+    emit = "<div class='full_command'>#{cmds.join('</div><div class=\'full_command\'>')}</div>"
+
+    emit = emit.replace /hubot/ig, "<span class=\"name\">@#{robot.name}</span>"
 
     res.setHeader 'content-type', 'text/html'
     res.end helpContents robot.name, emit
+
+
+htmlEncode = (str) ->
+  str.replace /[&<>"']/g, ($0) ->
+    "&" + {"&":"amp", "<":"lt", ">":"gt", '"':"quot", "'":"#39"}[$0] + ";"
