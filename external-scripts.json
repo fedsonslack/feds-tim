@@ -1,6 +1,5 @@
 [
   "hubot-diagnostics",
-  "hubot-help",
   "hubot-heroku-keepalive",
   "hubot-google-images",
   "hubot-google-translate",
@@ -10,5 +9,6 @@
   "hubot-rules",
   "hubot-shipit",
   "hubot-youtube",
-  "hubot-javascript"
+  "hubot-javascript",
+  "hubot-insulter"
 ]
